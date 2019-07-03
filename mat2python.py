@@ -5,7 +5,7 @@ Created on Wed Jun 12 02:32:29 2019
 @author: user
 """
 
-#import cv2
+import cv2
 import h5py as h5
 from glob import glob
 import numpy as np
@@ -15,9 +15,14 @@ from matplotlib import pyplot as plt
 
 c=1
 
-file_path=r"C:\Users\NRAD\Desktop\snehashis internship 2019\medical dataset\brainTumorDataPublic_1766/*.mat"
+file_path=r"C:\Users\NRAD\Desktop\snehashis internship 2019\medical dataset\brainTumorDataPublic_1766\mat_files/"
 
-pngs=glob(file_path)
+pngs=[]
+
+
+for i in range(1,3065):
+    
+    pngs.append(file_path+str(i)+'.mat')
 
 zero=np.zeros((len(pngs),2))
 
@@ -45,18 +50,45 @@ for i in range(len(pngs)):
     
     c=c+1
     
-    plt.figure(figsize=(5,5))
-    plt.imshow(image,cmap='gray')
-    plt.tight_layout()
-    plt.axis('off')
-    plt.savefig(name, dpi=20, frameon='false')
+   # plt.figure(figsize=(20,20))
+    #plt.imshow(image,cmap='gray')
+    #plt.tight_layout()
+    #plt.axis('off')
+    plt.imsave(name,image,cmap='Greys')
     
-    plt.figure(figsize=(5,5))
-    plt.imshow(tumorMask,cmap='gray')
-    plt.tight_layout()
-    plt.axis('off')
-    plt.savefig(name_tumorMask, dpi=20, frameon='false')
+    #plt.figure(figsize=(20,20))
+    #plt.imshow(tumorMask,cmap='gray')
+    #plt.tight_layout()
+    #plt.axis('off')
+    plt.imsave(name_tumorMask,tumorMask,cmap='Greys')
 
     
 csv_path_name=r"C:\Users\NRAD\Desktop\snehashis internship 2019\medical dataset\brainTumorDataPublic_1766/mat2python_mri_tumor.csv"
 df.to_csv(csv_path_name) 
+
+
+
+path=r'C:\Users\NRAD\Desktop\snehashis internship 2019\medical dataset\brain-mri-images-for-brain-tumor-detection\no\*.*'
+
+pngs=glob(path)
+
+for i in range(len(pngs)):
+    
+    img=cv2.imread(pngs[i])
+    
+    name=r'C:\Users\NRAD\Desktop\snehashis internship 2019\medical dataset\brain-mri-images-for-brain-tumor-detection\newno\id_' + str(i) + '.png'
+    
+    plt.imsave(name,img,cmap='Greys')
+    
+data=pd.read_csv(r'C:\Users\NRAD\Desktop\snehashis internship 2019\medical dataset\brain-mri-images-for-brain-tumor-detection\binary_tumor.csv')
+
+zero=np.zeros((98,2))
+
+df = pd.DataFrame(zero, columns = ['PID', 'CLASS NO']) 
+
+data=data.append(df, ignore_index=False)
+
+
+for i in range(98)
+    
+    
